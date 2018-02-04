@@ -1,8 +1,5 @@
 package test;
 
-import model.Status;
-import model.TaskList;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +11,25 @@ public class TestIt {
     public static void main(String[] args) {
         List<TaskList> taskLists = new ArrayList<>();
 
+        taskLists.addAll(createList());
+
+        System.out.println("---------- Nach Status sortiert: ----------");
+        taskLists.stream().sorted((t1,t2)-> t1.getStatus().compareTo(t2.getStatus())).forEach(System.out::println);
+
+        System.out.println("---------- Nach DueDate sortiert: ----------");
+        taskLists.stream().sorted((t1,t2)->t1.getDueDate().compareTo(t2.getDueDate())).forEach(System.out::println);
+
+        System.out.println("---------- Nach Status/DueDate sortiert: ----------");
+        taskLists.stream().sorted((t1,t2)->t1.getStatus().compareTo(t2.getStatus())).sorted((t1,t2)-> t1.getDueDate().compareTo(t2.getDueDate())).forEach(System.out::println);
+
+    }
+
+    public static List<TaskList> createList(){
+        List<TaskList> taskLists = new ArrayList<>();
+
         Date date = new Date();
+
+        date = new Date(2017, 03, 20);
         TaskList task1 = new TaskList("Task1", date, Status.IN_PROGRESS);
         TaskList task2 = new TaskList("Task2", date, Status.OPEN);
         Date date2 = new Date(2017, 03, 20);
@@ -36,14 +51,6 @@ public class TestIt {
         taskLists.add(task6);
         taskLists.add(task7);
 
-        System.out.println("---------- Nach Status sortiert: ----------");
-        taskLists.stream().sorted((t1,t2)-> t1.getStatus().compareTo(t2.getStatus())).forEach(System.out::println);
-
-        System.out.println("---------- Nach DueDate sortiert: ----------");
-        taskLists.stream().sorted((t1,t2)->t1.getDueDate().compareTo(t2.getDueDate())).forEach(System.out::println);
-
-        System.out.println("---------- Nach Status/DueDate sortiert: ----------");
-        taskLists.stream().sorted((t1,t2)->t1.getStatus().compareTo(t2.getStatus())).sorted((t1,t2)-> t1.getDueDate().compareTo(t2.getDueDate())).forEach(System.out::println);
-
+        return taskLists;
     }
 }
